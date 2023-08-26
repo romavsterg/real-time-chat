@@ -11,14 +11,14 @@ async function action({ request }) {
         const email = formData.get("email")
         const password = formData.get("password")
         const user = await signInWithEmailAndPassword(auth, email, password)
-        console.log(user)
-        localStorage.setItem("token", user.user.accessToken)
+        const token = user.user.accessToken
+        console.log(user, token)
+        localStorage.setItem("token", token)
         return redirect('/')
     } catch (error) {
         return error.message
     }
 }
-
 
 function Login() {
     const {auth} = useContext(Context)
@@ -30,11 +30,14 @@ function Login() {
     }
     const status = useNavigation().state
     const error = useActionData() 
+    const message = localStorage.getItem("message")
+    console.log(message)
 
     return (
         <div className="login-container">
             <h1>Sign in to your account</h1>
             {error && <h3 className="red">{error}</h3>}
+            {message && <h3 className="yellow">{message}</h3>}
 
             <Form method="post" className="login-form" replace>
                 <input
