@@ -4,6 +4,7 @@ import firebase from "firebase/compat/app";
 import 'firebase/compat/auth';
 import { Form, Link, redirect, useActionData, useNavigation } from 'react-router-dom';
 import { signInWithEmailAndPassword } from '@firebase/auth';
+import '../styles/Login.css';
 
 async function action({ request }) {
     try {
@@ -23,45 +24,41 @@ async function action({ request }) {
 function Login() {
     const {auth} = useContext(Context)
 
-    const login = async () => {
+    const login = async (e) => {
+        e.preventDefault()
         const provider = new firebase.auth.GoogleAuthProvider()
         const {user} = await auth.signInWithPopup(provider)
-        console.log(user)
+        console.log(user.multiFactor.user)
+        localStorage.setItem("token", user.multiFactor.user.accessToken)
+        redirect('/')
     }
     const status = useNavigation().state
     const error = useActionData() 
     const message = localStorage.getItem("message")
+    localStorage.setItem("message", '')
     console.log(message)
 
     return (
         <div className="login-container">
-            <h1>Sign in to your account</h1>
+            <h2>Sign in to your account</h2>
             {error && <h3 className="red">{error}</h3>}
             {message && <h3 className="yellow">{message}</h3>}
-
-            <Form method="post" className="login-form" replace>
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="Email address"
-                />
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                />
-                <button
-                    disabled={status === "submitting"}
-                >
-                    {status === "submitting"
-                        ? "Logging in..."
-                        : "Log in"
-                    }
-                </button>
-            </Form>
-            <h2>Or sign in with Google</h2>
-            <button onClick={login} >Войти с помощью Google</button>
-            <Link to='/register'>Don't have an account? You can register.</Link>
+            <div className="login-forms">
+                <Form method="post" className="login-form" replace>
+                    <input className='input' name="email" type="email" placeholder="Email address" required />
+                    <input className='input' name="password" type="password" placeholder="Password" required/>
+                    <button className='login-button' disabled={status === "submitting"}>
+                        {status === "submitting"
+                            ? "Logging in..."
+                            : "Log in"
+                        }
+                    </button>
+                </Form>
+                <div className="google-login">
+                    <button className='google-login-button login-button' onClick={login} >Sign in with Google</button>
+                </div>
+            </div>
+            <Link className='link' to='/register'>Don't have an account? You can register.</Link>
         </div>
     )
 }
