@@ -18,7 +18,7 @@ export async function loader() {
 
 function Chats() {
     const user = useLoaderData()
-    // console.log(user)
+    console.log(user)
     return (
         <section>
             <h2>Your Chats</h2>
