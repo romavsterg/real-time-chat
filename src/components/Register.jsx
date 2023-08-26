@@ -3,6 +3,7 @@ import 'firebase/compat/auth';
 import { auth } from '../index.js';
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
+import '../styles/Registration.css'
 
 
 export async function action({ request }) {
@@ -24,22 +25,14 @@ function Register() {
     const error = useActionData() 
 
     return (
-        <>
-            <h1>Registration</h1>
+        <div className='auth-container'>
+            <h2>Registration</h2>
             {error && <h3 className="red">{error}</h3>}
 
-            <Form method="post" className="login-form" replace>
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="Email address"
-                />
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                />
-                <button
+            <Form method="post" className="auth-form" replace>
+                <input  className='input' name="email" type="email" placeholder="Email address" required/>
+                <input  className='input' name="password" type="password" placeholder="Password" required/>
+                <button className='auth-button'
                     disabled={status === "submitting"}
                 >
                     {status === "submitting"
@@ -48,7 +41,7 @@ function Register() {
                     }
                 </button>
             </Form>
-        </>
+        </div>
     );
 }
 

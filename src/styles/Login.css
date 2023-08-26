@@ -1,4 +1,4 @@
-.login-container {
+.auth-container {
     height: 400px;
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@ h2 {
     justify-content: space-around;
 }
 
-.login-form, .google-login {
+.auth-form, .google-login {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -72,7 +72,7 @@ h2 {
     outline: none;
 }
 
-.login-button {
+.auth-button {
     width: 200px;
     height: 30px;
     border: 2px solid #3c6e60;
