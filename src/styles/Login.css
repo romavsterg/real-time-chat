@@ -1,5 +1,5 @@
 .auth-container {
-    height: 400px;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
     gap: 50px;
@@ -72,7 +72,7 @@ h2 {
     outline: none;
 }
 
-.auth-button {
+.button {
     width: 200px;
     height: 30px;
     border: 2px solid #3c6e60;
@@ -90,7 +90,7 @@ h2 {
     cursor: pointer;
 }
 
-.login-button:hover, .input:hover {
+.button:hover, .input:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 6px 16px;
     border: 2px solid #3c6e60;
     outline: none;

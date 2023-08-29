@@ -5,7 +5,12 @@ header {
 }
 
 .nav {
-    width: 400px;
+    width: max-content;
+    gap: 50px;
     display: flex;
     justify-content: space-between;
+}
+
+.logout {
+    
 }

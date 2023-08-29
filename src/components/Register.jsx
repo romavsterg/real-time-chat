@@ -32,7 +32,7 @@ function Register() {
             <Form method="post" className="auth-form" replace>
                 <input  className='input' name="email" type="email" placeholder="Email address" required/>
                 <input  className='input' name="password" type="password" placeholder="Password" required/>
-                <button className='auth-button'
+                <button className='button'
                     disabled={status === "submitting"}
                 >
                     {status === "submitting"

@@ -5,8 +5,8 @@ import Layout from './components/Layout';
 import Error from './components/Error';
 import Main from './pages/Main';
 import {Login, action as LoginAction } from './pages/Login';
-import Chat, {loader as ChatLoader} from './pages/Chat';
-import Chats, { loader as ChatsLoader }  from './components/Chats';
+import Chats, { loader as ChatsLoader } from './pages/Chats';
+import Chat, { loader as ChatLoader }  from './components/Chat';
 import Register, {action as RegisterAction} from './components/Register';
 
 const router = createBrowserRouter(createRoutesFromElements(

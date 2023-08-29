@@ -1,0 +1,42 @@
+.chats {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.new-chat {
+    display: flex;
+    gap: 10px;
+}
+
+.popup-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 2px solid #3c6e60;
+    background: #66c4a9;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.new-chat-form {
+    display: flex;
+    gap: 40px;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.close-popup-button {
+    background: none;
+    cursor: pointer;
+    width: min-content;
+    border: none;
+}

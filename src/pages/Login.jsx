@@ -47,7 +47,7 @@ function Login() {
                 <Form method="post" className="auth-form" replace>
                     <input className='input' name="email" type="email" placeholder="Email address" required />
                     <input className='input' name="password" type="password" placeholder="Password" required/>
-                    <button className='auth-button' disabled={status === "submitting"}>
+                    <button className='button' disabled={status === "submitting"}>
                         {status === "submitting"
                             ? "Logging in..."
                             : "Log in"
@@ -55,7 +55,7 @@ function Login() {
                     </button>
                 </Form>
                 <div className="google-login">
-                    <button className='google-login-button auth-button' onClick={login} >Sign in with Google</button>
+                    <button className='google-login-button button' onClick={login} >Sign in with Google</button>
                 </div>
             </div>
             <Link className='link' to='/register'>Don't have an account? You can register.</Link>
