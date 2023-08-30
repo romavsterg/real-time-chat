@@ -21,24 +21,34 @@ export async function loader() {
 
 function Chats() {
     const status = useNavigation().state
+    const user = useLoaderData()
 
     const {chatsRef} = useContext(Context)
 
-    const user = useLoaderData()
     const [isOpen, setIsOpen] = useState(false);
-    const [email, setEmail] = useState('a@gmail.com');
+    const [email, setEmail] = useState('');
     const [error, setError] = useState('')
     const [chats, setChats] = useState([])
+    const [isLoading, setIsloading] = useState(true)
     
     const togglePopup = () => {
         setIsOpen(!isOpen);
     }
 
     async function createChat(e) {
+        setIsloading(true)
         e.preventDefault()
-        chatsRef.orderByChild('title').equalTo(`${[user.email, email].sort()}`).once('value', (snapshot) => {
-            if (snapshot.exists()) {
-                setError(`the chat with this email is already exists`)
+        if (user.email === email) {
+            setError("you can not create a chat with yourself")
+            setIsloading(false)
+            return 
+        }
+        console.log(`${[user.email, email].sort()}`);
+        chatsRef.orderByChild('title').equalTo(`${[user.email, email].sort()}`.replace(',', '')).once('value', (snapshot) => {
+            console.log(snapshot.val());
+            if (snapshot.val()) {
+                setError(`the chat with this user is already exists`)
+                console.log('a')
             } else {
                 setError('')
                 let newChat = {
@@ -55,36 +65,46 @@ function Chats() {
                     user2: email
                 }
                 newChatRef.set(newChat)
-                chats.push(newChat)
+                setEmail('')
+                togglePopup()
             }
         })
+        setIsloading(false)
         if (error) {
             return 
         } 
     }
 
-    useEffect(() => {
-        chatsRef.orderByChild('user1').equalTo(user.email).once('value', async (snapshot) => {
-            if (snapshot.exists()) {
-                let arr = []
+    useEffect(() => {  
+         function getChats(prop) {
+            chatsRef.orderByChild(prop).equalTo(user.email).once('value', async (snapshot) => {
+                setIsloading(true)
                 for (var i in snapshot.val()) {
                     let chat = await chatsRef.child(i).get()
-                    arr.push(chat.val());
+                    chats.push(chat.val())
+                    console.log(chat.val());
+                    setChats(chats);
+                    // console.log(chats);
                 }
-                setChats(arr)
-            }
-        })
-        }, [user, chatsRef]
-    )
+                setIsloading(false)
+            }) 
+        }
+        getChats('user1')
+        getChats('user2')
+        
+    }, [chats, chatsRef, user.email])
+    console.log(chats);
     
     return (
         <section className='chats'>
             <h2>Your Chats</h2>
-            {
-            chats ? chats.map(chat => <Link className='chat-link' to={chat.key} key={chat.key}>{chat.title.replace(user.email, '')}</Link>) 
-            : 
-            <Loader/>
+            {isLoading && <Loader/>}
+            {chats[0] && 
+                <div className="chat-links">
+                    {chats.map(chat => <Link key={chat.key} to={chat.key} className='chat-link'>{chat.title.replace(user.email, '')}</Link>)}
+                </div>
             }
+            
             <div className="new-chat">
                 <button onClick={togglePopup} className='button'><h3>Create a new chat</h3></button>
                 {isOpen && 
@@ -95,7 +115,7 @@ function Chats() {
                         </div>
                         {error && <h3>{error}</h3>}
                         <Form onSubmit={createChat} className='new-chat-form'>
-                            <input value={email} onChange={(event)=>setEmail(event.target.value)}  required type="email" className='input' placeholder='email of the user you want to chat with' />
+                            <input value={email} onChange={(event)=>setEmail(event.target.value)}  required type="email" className='input' placeholder='email' />
                             <button className='button'>{status === 'submitting' ? "Creating" : "Create"}</button>
                         </Form>   
                     </Popup>

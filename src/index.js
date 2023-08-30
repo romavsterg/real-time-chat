@@ -25,7 +25,7 @@ export const Context = createContext(null)
 const auth = firebase.auth()
 
 const db = firebase.database()
-const chatsRef = db.ref("chats")
+const chatsRef = db.ref("/chats")
 // const newMessageRef =  messagesRef.push()
 // newMessageRef.set({
 //   user1Id: "HBG7JpaiE2NZaoHSzZfN1C24SgX2",
