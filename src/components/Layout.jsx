@@ -1,12 +1,12 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLoaderData } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 
 function Layout() {
     return (
         <>
-            <Header/>
+            <Header loggedIn={useLoaderData()}/>
             <main>
                 <Outlet/>
             </main>

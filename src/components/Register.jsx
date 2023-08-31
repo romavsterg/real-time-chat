@@ -20,6 +20,13 @@ export async function action({ request }) {
     }
 }
 
+export function loader() {
+    if (localStorage.getItem('logedIn') === 'true') {
+        return redirect('/')
+    }
+    return null
+}
+
 function Register() {
     const status = useNavigation().state
     const error = useActionData() 

@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 
 function Header() {
-    let loggedIn = false
-
     return (
         <header>
             <Link className='link' to='/'><h1>Real time chat</h1></Link>     
             <nav className='nav'>
-                { !loggedIn ? 
+                { localStorage.getItem('logedIn') === 'false' ? 
                     <>
                         <Link className='link' to='/login'>Log in</Link> 
                         <Link className='link' to='/register'>Register</Link> 
                     </>
                     :
-                    <button className='link logout' onClick={() => {localStorage.clear(); loggedIn = false}}>Log out</button>
+                    <Link to='/login' className='link logout' onClick={() => {localStorage.setItem("logedIn", false)}}>Log out</Link>
                 }
                 <Link className='link' to='/chats'>Your chats</Link> 
             </nav>     
