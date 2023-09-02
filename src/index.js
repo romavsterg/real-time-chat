@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import firebase from "firebase/compat/app";
 import 'firebase/compat/auth';
+import 'firebase/compat/database';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBPoYcNFACvSXp-sTEjqI8uXChJJZ0u-O8",
@@ -23,14 +24,23 @@ export const Context = createContext(null)
 
 const auth = firebase.auth()
 
-export {auth}
+const db = firebase.database()
+const chatsRef = db.ref("/chats")
+// const newMessageRef =  messagesRef.push()
+// newMessageRef.set({
+//   user1Id: "HBG7JpaiE2NZaoHSzZfN1C24SgX2",
+//   user2Id: "ILkSTPYo5NbvllexVwl3T26KbpY2"
+// })
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Context.Provider value={{
     firebase,
-    auth
+    auth,
+    chatsRef
   }}>
     <App />
   </Context.Provider>
 );
+
+export {auth}
