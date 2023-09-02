@@ -15,6 +15,7 @@ async function action({ request }) {
         const token = user.user.accessToken
         localStorage.setItem("token", token)
         localStorage.setItem("logedIn", true)
+        localStorage.setItem("message", '')
         return redirect('/')
     } catch (error) {
         return error.message

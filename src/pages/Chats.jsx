@@ -43,30 +43,21 @@ function Chats() {
             setIsloading(false)
             return 
         }
-        console.log(`${[user.email, email].sort()}`);
-        chatsRef.orderByChild('title').equalTo(`${[user.email, email].sort()}`.replace(',', '')).once('value', (snapshot) => {
-            console.log(snapshot.val());
+        chatsRef.orderByChild('title').equalTo(`${[user.email, email].sort()}`).once('value', (snapshot) => {
             if (snapshot.val()) {
                 setError(`the chat with this user is already exists`)
-                console.log('a')
             } else {
-                setError('')
+                const newChatRef = chatsRef.push()
                 let newChat = {
+                    key: newChatRef.key,
                     title: `${[user.email, email].sort()}`,
                     user1: user.email,
                     user2: email
                 }
-                const newChatRef = chatsRef.push()
                 newChatRef.set(newChat)
-                newChat = {
-                    key: newChatRef.key,
-                    title: `${[user.email, email].sort()}`.replace(',', ''),
-                    user1: user.email,
-                    user2: email
-                }
-                newChatRef.set(newChat)
-                setEmail('')
                 togglePopup()
+                setEmail('')
+                setError('')
             }
         })
         setIsloading(false)
@@ -76,24 +67,33 @@ function Chats() {
     }
 
     useEffect(() => {  
-         function getChats(prop) {
-            chatsRef.orderByChild(prop).equalTo(user.email).once('value', async (snapshot) => {
-                setIsloading(true)
+        const getChats = async (snapshot) => {
+            let Chats = []
+            setIsloading(true)
+            if (snapshot.val()) {
                 for (var i in snapshot.val()) {
                     let chat = await chatsRef.child(i).get()
-                    chats.push(chat.val())
-                    console.log(chat.val());
-                    setChats(chats);
-                    // console.log(chats);
+                    if (chat.val()) {
+                        chat = chat.val()
+                        console.log(chat);
+                        if (chat.user2 === user.email) {
+                            chat.title = chat.user1
+                            Chats.push(chat)
+                        } else if (chat.user1 === user.email) {
+                            chat.title = chat.user2
+                            Chats.push(chat)
+                        }
+                    }
                 }
-                setIsloading(false)
-            }) 
+            }
+            Chats = Chats.filter((item, pos) => {
+                return Chats.indexOf(item) === pos
+            })
+            setIsloading(false)
+            setChats(Chats);
         }
-        getChats('user1')
-        getChats('user2')
-        
-    }, [chats, chatsRef, user.email])
-    console.log(chats);
+        chatsRef.on('value', async (snapshot) => await getChats(snapshot))
+    }, [chatsRef, user.email])
     
     return (
         <section className='chats'>
@@ -101,10 +101,10 @@ function Chats() {
             {isLoading && <Loader/>}
             {chats[0] && 
                 <div className="chat-links">
-                    {chats.map(chat => <Link key={chat.key} to={chat.key} className='chat-link'>{chat.title.replace(user.email, '')}</Link>)}
+                    {chats.map(chat => <Link key={chat.key} to={chat.key} className='chat-link'>{chat.title}</Link>)}
                 </div>
             }
-            
+            <Outlet/>
             <div className="new-chat">
                 <button onClick={togglePopup} className='button'><h3>Create a new chat</h3></button>
                 {isOpen && 

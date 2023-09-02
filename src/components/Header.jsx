@@ -13,7 +13,7 @@ function Header() {
                         <Link className='link' to='/register'>Register</Link> 
                     </>
                     :
-                    <Link to='/login' className='link logout' onClick={() => {localStorage.setItem("logedIn", false)}}>Log out</Link>
+                    <Link to='/login' className='link logout' onClick={() => {localStorage.setItem("logedIn", false); localStorage.setItem("token", undefined)}}>Log out</Link>
                 }
                 <Link className='link' to='/chats'>Your chats</Link> 
             </nav>     

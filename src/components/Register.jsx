@@ -12,8 +12,9 @@ export async function action({ request }) {
         const email = formData.get("email")
         const password = formData.get("password")
         const user =await createUserWithEmailAndPassword(auth, email, password)
-        console.log(user)
         localStorage.setItem('token', user.user.accessToken)
+        localStorage.setItem("logedIn", true)
+        localStorage.setItem("message", '')
         return redirect('/')
     } catch (error) {
         return error.message

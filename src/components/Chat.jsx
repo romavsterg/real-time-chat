@@ -7,13 +7,13 @@ export async function loader({ params }) {
 
 
 function Chat() {
-    const user = useLoaderData()
-    console.log(user)
+    const params = useLoaderData()
+    console.log(params);
     return (
         <div>
             <h3>Chat</h3> 
             <div className="chat-container">
-                <div className="messages"></div>
+                <div className="messages">pa</div>
             </div>
         </div>
     );
