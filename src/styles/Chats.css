@@ -1,8 +1,8 @@
-.chats {
-    height: 400px;
+.chats-container {
+    height: 530px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 }
 
 .new-chat {
@@ -46,8 +46,8 @@
     flex-direction: column;
     gap: 20px;
     overflow: scroll;
-    width: 400px;
-    border: 2px solid #3c6e60;
+    width: 500px;
+    border-right: 2px solid #3c6e60;
     padding: 10px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -75,11 +75,21 @@
 }
 
 .chat-link:hover {
-    padding: 6.7px 10px;
-    font-size: 20px;
+    font-size: 17px;
     color: #dfdfdf;
 }
 
 .active-chat-link {
     color: #dfdfdf;
+}
+
+.chats {
+    display: flex;
+    height: 100%;
+    border: 2px solid #3c6e60;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
