@@ -75,7 +75,6 @@ function Chats() {
                     let chat = await chatsRef.child(i).get()
                     if (chat.val()) {
                         chat = chat.val()
-                        console.log(chat);
                         if (chat.user2 === user.email) {
                             chat.title = chat.user1
                             Chats.push(chat)
@@ -96,15 +95,17 @@ function Chats() {
     }, [chatsRef, user.email])
     
     return (
-        <section className='chats'>
+        <section className='chats-container'>
             <h2>Your Chats</h2>
             {isLoading && <Loader/>}
             {chats[0] && 
-                <div className="chat-links">
-                    {chats.map(chat => <Link key={chat.key} to={chat.key} className='chat-link'>{chat.title}</Link>)}
+                <div className="chats">
+                    <div className="chat-links">
+                        {chats.map(chat => <Link key={chat.key} to={chat.key} className='chat-link'>{chat.title}</Link>)}
+                    </div>
+                    <Outlet/>
                 </div>
             }
-            <Outlet/>
             <div className="new-chat">
                 <button onClick={togglePopup} className='button'><h3>Create a new chat</h3></button>
                 {isOpen && 

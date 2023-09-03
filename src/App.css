@@ -7,11 +7,11 @@
 #root {
     width: 100vw;
     height: 100vh;
-    padding: 50px;
+    padding: 40px 50px;
     background-color: #66c4a9;
     display: flex;
     flex-direction: column;
-    gap: 70px;
+    justify-content: space-between;
 }
 
 .link {
