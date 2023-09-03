@@ -1,8 +1,8 @@
 .chats-container {
-    height: 600px;
+    height: 530px;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 }
 
 .new-chat {

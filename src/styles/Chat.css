@@ -59,3 +59,27 @@
     background-color: #3c6e60;
     cursor: pointer;
 }
+
+.messages {
+    padding: 20px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.messages::-webkit-scrollbar {
+    display: none;
+}
+
+.message {
+    width: max-content;
+    max-width: 80%;
+    padding: 10px;
+    border: 2px solid #3c6e60;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}

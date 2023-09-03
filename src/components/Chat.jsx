@@ -26,6 +26,7 @@ function Chat() {
     const [chat, setChat] = useState(null)
 
     const [messageText, setMessageText] = useState('')
+    const [messages, setMessages] = useState([])
 
     useEffect(() => {
         async function GetChat(id) {
@@ -54,8 +55,10 @@ function Chat() {
             const newMessageRef = messagesRef.push()
 
             const newMessage = {
+                id: newMessageRef.key,
                 chatId: chatId,
-                text: messageText
+                text: messageText,
+                from: user.email
             }
 
             newMessageRef.set(newMessage)
@@ -66,13 +69,36 @@ function Chat() {
         }
     }
 
+    useEffect(() => {  
+        const getChats = async (snapshot) => {
+            let Messages = []
+            if (snapshot.val()) {
+                for (var i in snapshot.val()) {
+                    let message = await messagesRef.child(i).get()
+                    if (message.val()) {
+                        message = message.val()
+                        Messages.push(message)
+                    }
+                }
+            }
+            setMessages(Messages);
+        }
+        messagesRef.orderByChild('chatId').equalTo(chatId).on('value', async (snapshot) => await getChats(snapshot))
+    }, [messagesRef, user.email, chatId])
+
     return (
         <div className='chat'>
             {chat ?
                 <>
                     <h2 className='chat-title'>{chat.title}</h2> 
                     <div className="chat-container">
-                        <div className="messages"></div>
+                        <div className="messages">
+                            {messages.map(message => 
+                                <div className='message' key={message.id} style={{'margin-left': message.from === user.email ? 'auto' : '0'}}>
+                                    <p>{message.text}</p>
+                                </div>)
+                            }
+                        </div>
                     </div>
                     <Form className='message-form' method='post' onSubmit={createMessage}>
                         <textarea className='input' type="text" value={messageText} 

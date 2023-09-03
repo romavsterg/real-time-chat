@@ -96,7 +96,6 @@ function Chats() {
     
     return (
         <section className='chats-container'>
-            <h2>Your Chats</h2>
             {isLoading && <Loader/>}
             {chats[0] && 
                 <div className="chats">
