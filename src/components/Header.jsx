@@ -15,7 +15,7 @@ function Header() {
                     :
                     <Link to='/login' className='link logout' onClick={() => {localStorage.setItem("logedIn", false); localStorage.setItem("token", undefined)}}>Log out</Link>
                 }
-                <Link className='link' to='/chats'>Your chats</Link> 
+                <Link className='link' to='/chats'>Chats</Link> 
             </nav>     
         </header>
     );
